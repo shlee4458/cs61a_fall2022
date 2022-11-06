@@ -17,6 +17,26 @@
 )
 
 (define (accumulate joiner start n term)
-  'YOUR-CODE-HERE)
+        (if (= n 0)
+            start
+            (begin (define result (joiner start (term n)))
+                   (accumulate joiner result (- n 1) term))
+        )
+)
 
-(define (no-repeats lst) 'YOUR-CODE-HERE)
+(define (no-repeats lst)
+        (define helper (lambda (s filtered-lst)
+                (cond ((null? s) filtered-lst)
+                      ((> (last-element filtered-lst) (car s))
+                              (begin (define result (append filtered-lst (list (car s))))
+                                     (helper (cdr s) result)))
+                      (else (helper (cdr s) filtered-lst))))
+        )
+        (helper (cdr lst) (list (car lst)))
+)
+
+(define (last-element lst)
+        (if (null? (cdr lst))
+        (car lst)
+        (last-element (cdr lst)))
+)
